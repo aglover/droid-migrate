@@ -9,7 +9,7 @@ public class MigrationsResourceFileParserTest {
 	@Test
 	public void testRetreiveSequenceNumber() throws Exception {
 		MigrationsResourceFileParser parser = new MigrationsResourceFileParser("etc/migrations.xml");
-		int value = parser.getNextSequence();
+		int value = parser.getSequence();
 		assertEquals(2, value);
 	}
 	

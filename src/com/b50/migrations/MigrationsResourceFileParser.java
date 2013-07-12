@@ -25,7 +25,7 @@ public class MigrationsResourceFileParser {
 		this.document = builder.parse(path);
 	}
 		
-	public int getNextSequence() throws XPathExpressionException {
+	public int getSequence() throws XPathExpressionException {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath xpath = factory.newXPath();
 		XPathExpression expr = xpath.compile("/resources/integer[@name='database_version']/text()");
