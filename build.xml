@@ -1,6 +1,6 @@
 <project name="migrations" basedir="." default="jar">
 
-    <property name="version" value="0.2"/>
+    <property name="version" value="0.3"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="target"/>
     <property name="build.test.dir" value="${build.dir}/test"/>

@@ -49,22 +49,22 @@ public class Migrator {
 		}
 	}
 
-	private AbstractMigration getMigrationForPackageAndName(String pckName, String clzzName)
+	private AbstractMigration getMigrationForPackageAndName(SQLiteDatabase db, String pckName, String clzzName)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		return (AbstractMigration) Class.forName(pckName + "." + clzzName).newInstance();
+		AbstractMigration migration = (AbstractMigration) Class.forName(pckName + "." + clzzName).newInstance();
+		migration.setDatabase(db);
+		return migration;
 	}
 
 	private void handleUp(SQLiteDatabase db, String pckName, String clzzName) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
-		AbstractMigration migration = getMigrationForPackageAndName(packageName, clzzName);
-		migration.setDatabase(db);
+		AbstractMigration migration = getMigrationForPackageAndName(db, packageName, clzzName);
 		migration.up();
 	}
 
 	private void handleDown(SQLiteDatabase db, String pckName, String clzzName) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
-		AbstractMigration migration = getMigrationForPackageAndName(packageName, clzzName);
-		migration.setDatabase(db);
+		AbstractMigration migration = getMigrationForPackageAndName(db, packageName, clzzName);
 		migration.down();
 	}
 }
