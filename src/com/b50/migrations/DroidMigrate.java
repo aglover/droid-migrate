@@ -66,17 +66,19 @@ public class DroidMigrate {
 			}
 
 		} else if (args[0] != null && args[0].equalsIgnoreCase("generate")) {
-			// read migrations.xml and get sequence number
 			MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
 					+ "values" + File.separator + "migrations.xml");
-			int currentSequence = migrationsParser.getSequence();
+			int nextSequence = migrationsParser.getSequence() + 1;
 			MigrationXMLGenerator generator = new MigrationXMLGenerator("templates", "migrations.xml.ftl");
 			String content = generator.generate(migrationsParser.getDatabaseName(), migrationsParser.getPackageName(),
-					++currentSequence);
+					nextSequence);
 
-			System.out.println("content is " + content);
-			// update it
-			// generate new migration
+			writeFile("res" + File.separator + "values" + File.separator + "migrations.xml", content);
+			MigrationClassGenerator clzzGenerator = new MigrationClassGenerator("templates", "Migration.java.ftl");
+			String migrationClzzContent = clzzGenerator.generate(migrationsParser.getPackageName(), nextSequence);
+			String pckName = migrationsParser.getPackageName();
+			String pckPath = pckName.replace(".", File.separator);
+			writeFile("src" + File.separator + pckPath + File.separator + "DBVersion" + nextSequence + ".java", migrationClzzContent);
 		}
 	}
 
