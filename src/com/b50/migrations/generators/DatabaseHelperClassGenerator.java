@@ -1,6 +1,5 @@
 package com.b50.migrations.generators;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -12,17 +11,17 @@ import freemarker.template.TemplateException;
 
 public class DatabaseHelperClassGenerator {
 
-	private String templateLocation;
 	private String templateName;
+	private TemplateConfigurator templateConfig;
 
 	public DatabaseHelperClassGenerator(String templateLocation, String templateName) {
-		this.templateLocation = templateLocation;
 		this.templateName = templateName;
+		this.templateConfig = new TemplateConfigurator(templateLocation, templateName);
 	}
 
 	public String generate(String packageName) throws IOException {
-		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(new File(this.templateLocation));
+		Configuration cfg = this.templateConfig.getConfiguration();
+
 		Template template = cfg.getTemplate(this.templateName);
 		Map<String, String> input = new HashMap<String, String>();
 		input.put("package", packageName);

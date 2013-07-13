@@ -1,6 +1,5 @@
 package com.b50.migrations.generators;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -12,21 +11,21 @@ import freemarker.template.TemplateException;
 
 public class MigrationXMLGenerator {
 
-	private String templateLocation;
 	private String templateName;
-	
-	public MigrationXMLGenerator(String templateLocation, String templateName) {
-		this.templateLocation = templateLocation;
+	private TemplateConfigurator templateConfig;
+
+	public MigrationXMLGenerator(String templateLocation, String templateName) {		
 		this.templateName = templateName;
+		this.templateConfig = new TemplateConfigurator(templateLocation, templateName);
 	}
-	
-	public String generate(String databaseName, String packageName, int sequence) throws IOException{
-		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(new File(templateLocation));
+
+
+	public String generate(String databaseName, String packageName, int sequence) throws IOException {
+		Configuration cfg = templateConfig.getConfiguration();
 		Template template = cfg.getTemplate(templateName);
 		Map<String, String> input = new HashMap<String, String>();
 		input.put("package", packageName);
-		input.put("sequence_number", ""+sequence);
+		input.put("sequence_number", "" + sequence);
 		input.put("database_name", databaseName);
 		StringWriter out = new StringWriter();
 		try {
@@ -38,4 +37,5 @@ public class MigrationXMLGenerator {
 		out.flush();
 		return out.toString();
 	}
+
 }
