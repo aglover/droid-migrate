@@ -4,3 +4,5 @@
 bin-eclipse/
 target/
 stub-lib/
+./dist/
+dist/

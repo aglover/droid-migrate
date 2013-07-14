@@ -1,4 +1,4 @@
-<project name="migrations" basedir="." default="jar">
+<project name="droid-migrate" basedir="." default="jar">
 
 	<property name="version" value="0.6" />
 	<property name="lib.dir" value="lib" />
@@ -6,7 +6,7 @@
 	<property name="build.test.dir" value="${build.dir}/test" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="stubs.dir" value="${build.dir}/ext-classes" />
-	<property name="final.templates.dir" value="${build.dir}/templates/com/b50/migrations/generators"/>
+	<property name="final.templates.dir" value="${build.dir}/templates/com/b50/migrations/generators" />
 
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="**/*.jar" />
@@ -14,6 +14,7 @@
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
+		<delete dir="dist" />
 	</target>
 
 	<target name="compile.stubs">
@@ -25,8 +26,8 @@
 	<target name="compile" depends="compile.stubs"
 		description="compiles source code and puts classes in target/ directory">
 		<mkdir dir="${classes.dir}" />
-		<javac includeantruntime="false" srcdir="src" destdir="${classes.dir}" debug="true"
-			classpathref="classpath">
+		<javac includeantruntime="false" srcdir="src" destdir="${classes.dir}"
+			debug="true" classpathref="classpath">
 			<classpath>
 				<path refid="classpath" />
 				<pathelement path="${stubs.dir}" />
@@ -44,14 +45,29 @@
 	</target>
 
 	<target name="jar" depends="test, cp-templates" description="creates jar file for distribution">
-		<jar destfile="${build.dir}/${ant.project.name}-${version}.jar">
+		<jar destfile="${build.dir}/${ant.project.name}-all-${version}.jar">
 			<fileset dir="${classes.dir}" includes="**/*.class" />
 			<fileset dir="${build.dir}/templates" />
 			<manifest>
 				<attribute name="Main-Class" value="com.b50.migrations.DroidMigrate" />
 			</manifest>
 		</jar>
-
+	</target>
+	
+	<target name="jar-min" depends="jar" description="creates minimal required jar file for devices">
+		<jar destfile="${build.dir}/${ant.project.name}-${version}.jar">
+			<fileset dir="${classes.dir}">
+			    <include name="com/b50/migrations/AbstractMigration.class" />
+			    <include name="com/b50/migrations/MigrationException.class" />
+			    <include name="com/b50/migrations/Migrator.class" />
+			</fileset> 
+		</jar>
+	</target>
+	
+	<target name="dist" depends="jar" description="creates disto library and puts it into dist dir">
+	    <mkdir dir="dist" />
+	    <copy file="${build.dir}/${ant.project.name}-all-${version}.jar" todir="dist"/>
+	    <move file="dist/${ant.project.name}-all-${version}.jar" tofile="dist/${ant.project.name}-all.jar"/>	    			
 	</target>
 
 	<target name="compile-tests" depends="compile">
