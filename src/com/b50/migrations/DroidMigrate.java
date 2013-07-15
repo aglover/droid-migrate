@@ -7,6 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import com.b50.migrations.generators.DatabaseHelperClassGenerator;
 import com.b50.migrations.generators.MigrationClassGenerator;
 import com.b50.migrations.generators.MigrationXMLGenerator;
@@ -62,8 +66,7 @@ public class DroidMigrate {
 
 		} else if (args[0] != null && args[0].equalsIgnoreCase("generate")) {
 			if (args[1] != null && args[1].equalsIgnoreCase("up")) {
-				MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
-						+ "values" + File.separator + "migrations.xml");
+				MigrationsResourceFileParser migrationsParser = initMigrationsResourceFileParser();
 				int nextSequence = migrationsParser.getSequence() + 1;
 
 				handleXMLResourceFile(migrationsParser.getDatabaseName(), migrationsParser.getPackageName(),
@@ -71,8 +74,7 @@ public class DroidMigrate {
 				
 				handleMigrationClassFile(migrationsParser.getPackageName(), nextSequence);
 			} else if (args[1] != null && args[1].equalsIgnoreCase("down")) {
-				MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
-						+ "values" + File.separator + "migrations.xml");
+				MigrationsResourceFileParser migrationsParser = initMigrationsResourceFileParser();
 				int prevSequence = 1;
 				if (migrationsParser.getSequence() > 1) {
 					prevSequence = migrationsParser.getSequence() - 1;
@@ -86,6 +88,13 @@ public class DroidMigrate {
 				System.err.println("Please indicate up or down for generate");
 			}
 		}
+	}
+
+	private static MigrationsResourceFileParser initMigrationsResourceFileParser() throws SAXException, IOException,
+			ParserConfigurationException {
+		MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
+				+ "values" + File.separator + "migrations.xml");
+		return migrationsParser;
 	}
 
 	private static void handleMigrationClassFile(String packageName, int sequence) throws IOException {
