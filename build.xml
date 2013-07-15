@@ -64,7 +64,7 @@
 		</jar>
 	</target>
 	
-	<target name="dist" depends="jar" description="creates disto library and puts it into dist dir">
+	<target name="dist" depends="jar-min" description="creates disto library and puts it into dist dir">
 	    <mkdir dir="dist" />
 	    <copy file="${build.dir}/${ant.project.name}-all-${version}.jar" todir="dist"/>
 	    <move file="dist/${ant.project.name}-all-${version}.jar" tofile="dist/${ant.project.name}-all.jar"/>	    			

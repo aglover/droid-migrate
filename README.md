@@ -11,6 +11,15 @@ If you've ever worked with Rails migrations, then you'll be right at home. If Ra
 
 #How to get started
 
+##Step 1
 
-##Staging
+Clone this repository (or download the zip file). Fire up a terminal and run `ant dist`. This will run some tests and ultimately build a few jar files. One jar file contains the bare minimum classes you'll need in an Android project (it's 3KB in size). The other jar file has code required for generating migrations and is not indented to be bundled with your app. 
+
+Once you've done that, you'll need to do two things:  create new environment variable dubbed `DROID_MIGRATE_HOME` and update your `PATH`. `DROID_MIGRATE_HOME` should be set to where you cloned (or unzipped) this project. Update your `PATH` to include `DROID_MIGRATE_HOME\bin`. 
+
+##Step 2
+
+Next, 
+
+
 
