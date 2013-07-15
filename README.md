@@ -1,4 +1,5 @@
-#Droid Migrate - Android SQLite migrations made easy!
+#Droid Migrate
+##Android SQLite migrations made easy!
 
 Rails migrations are beautiful. Progressive database changes are nicely encapsulated in _migrations_, which can be applied both back and forth. When I started working on an Android app that made use of SQLite, I found myself wishing for the same facility. 
 
