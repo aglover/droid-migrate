@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.b50.migrations.generators.DatabaseHelperClassGenerator;
@@ -46,18 +47,12 @@ public class DroidMigrate {
 				System.out.println("package name is " + options.valueOf("p"));
 				System.out.println("db name is " + options.valueOf("d"));
 
-				MigrationXMLGenerator generator = new MigrationXMLGenerator("templates", "migrations.xml.ftl");
-				String xmlContent = generator.generate(options.valueOf("d").toString(),
-						options.valueOf("p").toString(), 1);
-				writeFile("res" + File.separator + "values" + File.separator + "migrations.xml", xmlContent);
+				handleXMLResourceFile(options.valueOf("d").toString(), options.valueOf("p").toString(), 1);
 
-				MigrationClassGenerator clzzGenerator = new MigrationClassGenerator("templates", "Migration.java.ftl");
-				String migrationClzzContent = clzzGenerator.generate(options.valueOf("p").toString(), 1);
+				handleMigrationClassFile(options.valueOf("p").toString(), 1);
 
 				String pckName = options.valueOf("p").toString();
 				String pckPath = pckName.replace(".", File.separator);
-				writeFile("src" + File.separator + pckPath + File.separator + "DBVersion1.java", migrationClzzContent);
-
 				DatabaseHelperClassGenerator dbGenerator = new DatabaseHelperClassGenerator("templates",
 						"DatabaseHelper.java.ftl");
 				String dbHelperContent = dbGenerator.generate(options.valueOf("p").toString());
@@ -66,20 +61,45 @@ public class DroidMigrate {
 			}
 
 		} else if (args[0] != null && args[0].equalsIgnoreCase("generate")) {
-			MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
-					+ "values" + File.separator + "migrations.xml");
-			int nextSequence = migrationsParser.getSequence() + 1;
-			MigrationXMLGenerator generator = new MigrationXMLGenerator("templates", "migrations.xml.ftl");
-			String content = generator.generate(migrationsParser.getDatabaseName(), migrationsParser.getPackageName(),
-					nextSequence);
+			if (args[1] != null && args[1].equalsIgnoreCase("up")) {
+				MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
+						+ "values" + File.separator + "migrations.xml");
+				int nextSequence = migrationsParser.getSequence() + 1;
 
-			writeFile("res" + File.separator + "values" + File.separator + "migrations.xml", content);
-			MigrationClassGenerator clzzGenerator = new MigrationClassGenerator("templates", "Migration.java.ftl");
-			String migrationClzzContent = clzzGenerator.generate(migrationsParser.getPackageName(), nextSequence);
-			String pckName = migrationsParser.getPackageName();
-			String pckPath = pckName.replace(".", File.separator);
-			writeFile("src" + File.separator + pckPath + File.separator + "DBVersion" + nextSequence + ".java", migrationClzzContent);
+				handleXMLResourceFile(migrationsParser.getDatabaseName(), migrationsParser.getPackageName(),
+						nextSequence);
+				
+				handleMigrationClassFile(migrationsParser.getPackageName(), nextSequence);
+			} else if (args[1] != null && args[1].equalsIgnoreCase("down")) {
+				MigrationsResourceFileParser migrationsParser = new MigrationsResourceFileParser("res" + File.separator
+						+ "values" + File.separator + "migrations.xml");
+				int prevSequence = 1;
+				if (migrationsParser.getSequence() > 1) {
+					prevSequence = migrationsParser.getSequence() - 1;
+				}
+
+				handleXMLResourceFile(migrationsParser.getDatabaseName(), migrationsParser.getPackageName(),
+						prevSequence);
+
+				handleMigrationClassFile(migrationsParser.getPackageName(), prevSequence);
+			} else {
+				System.err.println("Please indicate up or down for generate");
+			}
 		}
+	}
+
+	private static void handleMigrationClassFile(String packageName, int sequence) throws IOException {
+		MigrationClassGenerator clzzGenerator = new MigrationClassGenerator("templates", "Migration.java.ftl");
+		String migrationClzzContent = clzzGenerator.generate(packageName, sequence);
+		String pckPath = packageName.replace(".", File.separator);
+		writeFile("src" + File.separator + pckPath + File.separator + "DBVersion" + sequence + ".java",
+				migrationClzzContent);
+	}
+
+	private static void handleXMLResourceFile(String dbName, String packageName, int sequence) throws IOException {
+		MigrationXMLGenerator generator = new MigrationXMLGenerator("templates", "migrations.xml.ftl");
+		String content = generator.generate(dbName, packageName, sequence);
+		writeFile("res" + File.separator + "values" + File.separator + "migrations.xml", content);
 	}
 
 	private static void writeFile(String path, String content) throws FileNotFoundException {
