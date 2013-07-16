@@ -19,7 +19,15 @@ Once you've done that, you'll need to do two things:  create new environment var
 
 ##Step 2
 
-Next, 
+Next, open a terminal in the root of a desired Android project. Droid Migrate will create a number of assets for you depending on what command you issue. 
+
+If you are creating an initial migration -- i.e. on App create, for example, then you'll need to initialize Droid Migrate like so:
+
+```
+migrate.sh init -d <your database name> -p <some Java package>
+```
+
+That is, the init command creates an initial migration for the database as specified by the ```-d``` flag and the migration class (along with a few other classes) will be put into the package as specified by the ```-p``` flag.
 
 
 
