@@ -27,7 +27,14 @@ If you are creating an initial migration -- i.e. on App create, for example, the
 droid-migrate init -d <your database name> -p <some Java package>
 ```
 
-That is, the init command creates an initial migration for the database as specified by the ```-d``` flag and the migration class (along with a few other classes) will be put into the package as specified by the ```-p``` flag.
+That is, the ```init``` command creates an initial migration for the database as specified by the ```-d``` flag and the migration class (along with a few other classes) will be put into the package as specified by the ```-p``` flag.
+
+For example, if you specified the ```-p``` flag's value as ```com.acme.app``` then that package will have two classes:
+
++ ```DatabaseHelper```
++ ```DBVersion1```
+
+Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration.
 
 
 
