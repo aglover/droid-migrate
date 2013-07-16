@@ -34,7 +34,7 @@ For example, if you specified the ```-p``` flag's value as ```com.acme.app``` th
 + ```DatabaseHelper```
 + ```DBVersion1```
 
-Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration.
+Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML file will be generated in the ```res/values``` directory dubbed ```migrations.xml```. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of it too.
 
 
 
