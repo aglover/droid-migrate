@@ -1,6 +1,21 @@
 #Droid Migrate
 ##Android SQLite migrations made easy!
 
+Two easy commands. One to create your first migration and another to upgrade.
+```
+droid-migrate init -d my_database -p com.acme.myapp
+```
+
+```
+droid-migrate generate up
+```
+
+Need to rollback? No problem, run:
+
+```
+droid-migrate generate down
+```
+
 [Rails migrations](http://guides.rubyonrails.org/migrations.html) are beautiful. Progressive database changes are nicely encapsulated in _migrations_, which can be applied for both upgrades and rollbacks. When I started working on an Android app that made use of SQLite, I found myself wishing for the same facility. 
 
 Android does come with a helper class, `android.database.sqlite.SQLiteOpenHelper`, that facilitates database migrations _somewhat_ and this framework makes use of it. In essence, the `SQLiteOpenHelper` class keys off of a database version and will run a corresponding `onCreate`, `onUpgrade`, or `onDowngrade` method depending on what version number an instance is initialized with. What those methods do and what version number is used is left entirely up to you, the app developer. 
