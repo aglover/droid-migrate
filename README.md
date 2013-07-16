@@ -1,19 +1,22 @@
 #Droid Migrate
 ##Android SQLite migrations made easy!
 
-Two easy commands. One to create your first migration and another to upgrade.
-```
-droid-migrate init -d my_database -p com.acme.myapp
-```
+Two easy commands. One to create your first migration:
 
 ```
-droid-migrate generate up
+$> droid-migrate init -d my_database -p com.acme.myapp
+```
+
+And another to upgrade:
+
+```
+$> droid-migrate generate up
 ```
 
 Need to rollback? No problem, run:
 
 ```
-droid-migrate generate down
+$> droid-migrate generate down
 ```
 
 [Rails migrations](http://guides.rubyonrails.org/migrations.html) are beautiful. Progressive database changes are nicely encapsulated in _migrations_, which can be applied for both upgrades and rollbacks. When I started working on an Android app that made use of SQLite, I found myself wishing for the same facility. 
@@ -39,7 +42,7 @@ Next, open a terminal in the root of a desired Android project. Droid Migrate wi
 If you are creating an initial migration -- i.e. on app create, for example, then you'll need to initialize Droid Migrate like so:
 
 ```
-droid-migrate init -d <your database name> -p <some Java package>
+$> droid-migrate init -d <your database name> -p <some Java package>
 ```
 
 That is, the ```init``` command creates an initial migration for the database as specified by the ```-d``` flag and the migration class (along with a few other classes) will be put into the package as specified by the ```-p``` flag.
