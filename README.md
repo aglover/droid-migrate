@@ -34,7 +34,7 @@ For example, if you specified the ```-p``` flag's value as ```com.acme.app``` th
 + ```DatabaseHelper```
 + ```DBVersion1```
 
-Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML document will be generated in the ```res/values``` directory dubbed ```migrations.xml```. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of it too.
+Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML document will be generated in the ```res/values``` directory dubbed ```migrations.xml```. This document will contain values for the database sequence for migrations, the package name, and the database name. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of the ```R``` object too.
 
 
 
