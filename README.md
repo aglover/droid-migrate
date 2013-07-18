@@ -100,7 +100,7 @@ Droid Migrate's secret sauce can be found in three files:
 
 For every corresponding version of your app's database, there's a `DBVersion` class -- these classes are named in sequence (i.e. `DBVersion1`, `DBVersion2`, and so on). These classes have `up` and `down` methods that correspond to upgrades and rollbacks, respectively. The base type, `AbstractMigration` has a method called `execSQL` that takes a `String` representing one to many SQL statements. 
 
-Finally, every Java framework worth its salt has a configuration file and Droid Migrate doesn't disappoint. `migrations.xml` is the beast that drives things. In fact, because Android generates a simple reference file for all elements in XML files (called `R`), you note that the `DatabaseHelper` class makes implicit use of your app's `R` file. For instance, the `migrations.xml` file has an element dubbed `database_version`:
+Finally, every Java framework worth its salt has a configuration file and Droid Migrate doesn't disappoint. `migrations.xml` is the beast that drives things (although beast is a stretch as the file has only 3 elements!) . In fact, because Android generates a simple reference file for all elements in XML files (called `R`), you note that the `DatabaseHelper` class makes implicit use of your app's `R` file. For instance, the `migrations.xml` file has an element dubbed `database_version`:
 
 ```
 <integer name="database_version">2</integer>
