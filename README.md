@@ -54,11 +54,15 @@ For example, if you specified the ```-p``` flag's value as ```com.acme.app``` th
 
 Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML document will be generated in the ```res/values``` directory dubbed ```migrations.xml```. This document will contain values for the database sequence for migrations, the package name, and the database name. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of the ```R``` object too.
 
+You will need to implement your database creation via the ```DBVersion1``` class -- simply provide your SQL `String` statements to the `execSQL` method inside the `up` method (and corresponding logic in the `down` method for rollbacks). 
+
+You _do not_ need to edit any other files (i.e. don't worry about the `migrations.xml` file nor the `DatabaseHelper` class).
+
 ##Step 3: Create subsequent migrations
 
-When you need to update SQLite either with database tables changes (i.e. ```ALTER``` commands) or you need to add more data (```INSERT```), you can generate a migration. This process will increment the database version and create a new migration class. Note, you can even generate a rollback. 
+When you need to update SQLite either with database tables changes (i.e. ```ALTER``` commands) or you need to add more data (```INSERT```), you can generate a migration. This process will increment the database version found in the ```migrations.xml``` file and create a new migration class (```DBVersion<next_sequence>```. Note, you can even generate a rollback. 
 
-If you want to generate an upgrade migration, you need to open a terminal in the root of a previously droid-migrate initialized project and type:
+If you want to generate an upgrade migration, you need to open a terminal in the root of a previously Droid Migrate initialized project and type:
 
 ```
 $> droid-migrate generate up
@@ -69,4 +73,14 @@ And if you need to rollback to a previous version, type:
 ```
 $> droid-migrate generate down
 ```
+
+You will then need to provide the relevant SQL details in the newly generated `DBVersion<next_sequence>` class (just like you did for the initial class, dubbed `DBVersion1`).
+
+#How it works
+
+Droid Migrate's secret sauce can be found in three files: 
+
++ ```DatabaseHelper```
++ ```DBVersion<some_sequence>```
++ ```res/values/migrations.xml```
 
