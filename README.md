@@ -25,6 +25,8 @@ Android does come with a helper class, `android.database.sqlite.SQLiteOpenHelper
 
 That's where Droid Migrate comes in -- this project manages version numbers and the migrations associated with them. Each migration can have a `up` and `down` method associated with it. You then plug in the appropriate SQL. Droid Migrate handles upgrades and rollbacks like Rails migrations. 
 
+Droid Migrate also provides you with a handy facade, dubbed `DatabaseHelper` from which you should obtain database connections (for doing things like displaying data, writing to SQLite, etc). This class is the core behind any migration that'll take place for your app. 
+
 If you've ever worked with Rails migrations, then you'll be right at home. If Rails migrations are new you to, but you've managed to deal with app SQLite upgrades and rollbacks, then you'll find this framework quite useful. 
 
 #How to get started
