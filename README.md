@@ -29,13 +29,13 @@ If you've ever worked with Rails migrations, then you'll be right at home. If Ra
 
 #How to get started
 
-##Step 1
+##Step 1: Set up PATH
 
 Clone this repository (or download the zip file). Fire up a terminal and run `ant dist`. This will run some tests and ultimately build a few jar files. One jar file contains the bare minimum classes you'll need in an Android project (it's 3KB in size). The other jar file has code required for generating migrations and is not indented to be bundled with your app. 
 
 Once you've done that, you'll need to do two things:  create new environment variable dubbed `DROID_MIGRATE_HOME` and update your `PATH`. `DROID_MIGRATE_HOME` should be set to where you cloned (or unzipped) this project. Update your `PATH` to include `DROID_MIGRATE_HOME\bin`. 
 
-##Step 2
+##Step 2: Create initial migration
 
 Next, open a terminal in the root of a desired Android project. Droid Migrate will create a number of assets for you depending on what command you issue. 
 
@@ -54,5 +54,19 @@ For example, if you specified the ```-p``` flag's value as ```com.acme.app``` th
 
 Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML document will be generated in the ```res/values``` directory dubbed ```migrations.xml```. This document will contain values for the database sequence for migrations, the package name, and the database name. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of the ```R``` object too.
 
+##Step 3: Create subsequent migrations
 
+When you need to update SQLite either with database tables changes (i.e. ```ALTER``` commands) or you need to add more data (```INSERT```), you can generate a migration. This process will increment the database version and create a new migration class. Note, you can even generate a rollback. 
+
+If you want to generate an upgrade migration, you need to open a terminal in the root of a previously droid-migrate initialized project and type:
+
+```
+$> droid-migrate generate up
+```
+
+And if you need to rollback to a previous version, type:
+
+```
+$> droid-migrate generate down
+```
 
