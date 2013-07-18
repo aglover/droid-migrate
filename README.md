@@ -118,3 +118,7 @@ super(context, context.getString(R.string.database_name),
 ```
 
 Note the reference to the `R` file obtaining the `database_version` value! 
+
+#Bonus information for those who read this far
+
+I built an app that uses SQLite to manage some simple data. I released it. Then I made some changes. Then I got a headache dealing with upgrades. I got a bigger headache when I saw an example of how to manage migrations (before Droid Migrate!). Take a look at [this class](http://grepcode.com/file_/repository.grepcode.com/java/ext/com.google.android/android-apps/4.0.1_r1/com/android/providers/calendar/CalendarDatabaseHelper.java/?v=source). That's not a trivial class (nor a trivial app), nevertheless, it blows my mind. So I created Droid Migrate.  
