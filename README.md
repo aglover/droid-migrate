@@ -58,6 +58,16 @@ You will need to implement your database creation via the ```DBVersion1``` class
 
 You _do not_ need to edit any other files (i.e. don't worry about the `migrations.xml` file nor the `DatabaseHelper` class).
 
+Once your app starts up on a device, so long as you use the `DatabaseHelper` object to obtain a SQL connection for building `ListView`s or what have you, a migration will take place. 
+
+For example, inside an `onCreate` method of your main `Activity`, you can grab a connection to SQLite like so: 
+
+```
+SQLiteDatabase db = (new DatabaseHelper(this)).getWritableDatabase();
+```
+
+This will result in a relevant migration.
+
 ##Step 3: Create subsequent migrations
 
 When you need to update SQLite either with database tables changes (i.e. ```ALTER``` commands) or you need to add more data (```INSERT```), you can generate a migration. This process will increment the database version found in the ```migrations.xml``` file and create a new migration class (```DBVersion<next_sequence>```. Note, you can even generate a rollback. 
