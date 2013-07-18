@@ -96,3 +96,5 @@ Droid Migrate's secret sauce can be found in three files:
 + ```DBVersion<some_sequence>```
 + ```res/values/migrations.xml```
 
+`DatabaseHelper`, as mentioned in the how to section, is a simple facade that makes working with a SQLite instance easier. Think of it (or any class that extends Android's `SQLiteOpenHelper`) as the canonical way to interact with SQLite in an Android app. In practice, you shouldn't ever need to alter this class. In fact, it is important that you don't alter the constructor, nor the methods `onDowngrade`, `onCreate`, or `onUpgrade` -- take a look at these methods if you will, but they leverage a simple class dubbed `Migrator` that ulimately works with instances of `AbstractMigration`, which all `DBVersion<sequence_number>` types extend from. 
+
