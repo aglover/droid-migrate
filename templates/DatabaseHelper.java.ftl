@@ -1,5 +1,8 @@
 package ${package};
 
+
+import ${core_package}.R;
+
 import com.b50.migrations.MigrationException;
 import com.b50.migrations.Migrator;
 

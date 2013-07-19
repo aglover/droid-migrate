@@ -19,12 +19,13 @@ public class DatabaseHelperClassGenerator {
 		this.templateConfig = new TemplateConfigurator(templateLocation, templateName);
 	}
 
-	public String generate(String packageName) throws IOException {
+	public String generate(String packageName, String corePackage) throws IOException {
 		Configuration cfg = this.templateConfig.getConfiguration();
 
 		Template template = cfg.getTemplate(this.templateName);
 		Map<String, String> input = new HashMap<String, String>();
 		input.put("package", packageName);
+		input.put("core_package", corePackage);
 		StringWriter out = new StringWriter();
 		try {
 			template.process(input, out);
