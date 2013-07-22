@@ -5,11 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class MigrationsDatabaseHelper extends SQLiteOpenHelper{
+public class MigrationsDatabaseHelper extends SQLiteOpenHelper {
 
 	protected Migrator migrator;
 
-	public MigrationsDatabaseHelper(Context context, String dbName, Object object, int dbVersion, String packageName) {
+	public MigrationsDatabaseHelper(Context context, String dbName, SQLiteDatabase.CursorFactory factory,
+			int dbVersion, String packageName) {
 		super(context, dbName, null, dbVersion);
 		this.migrator = new Migrator(packageName);
 	}
@@ -37,6 +38,6 @@ public class MigrationsDatabaseHelper extends SQLiteOpenHelper{
 			Log.e("MigrationsDatabaseHelper", "exception with onUpgrade", e);
 		}
 
-	}	
+	}
 
 }

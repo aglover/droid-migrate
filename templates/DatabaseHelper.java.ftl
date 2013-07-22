@@ -2,6 +2,7 @@ package ${package};
 
 import ${core_package}.R;
 import android.content.Context;
+import com.b50.migrations.MigrationsDatabaseHelper;
 
 public class DatabaseHelper extends MigrationsDatabaseHelper {
 	
