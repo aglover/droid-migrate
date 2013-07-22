@@ -22,6 +22,7 @@ import com.b50.migrations.generators.MigrationXMLGenerator;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
+//TODO: refactor main method into testable methods
 public class DroidMigrate {
 
 	public static void main(String[] args) throws Exception {

@@ -16,7 +16,7 @@ public class DatabaseHelperClassGeneratorTest {
 		assertNotNull(content);
 		assertTrue(content.contains("package my.package;"));
 		assertTrue(content.contains("import com.core.R"));
-		assertTrue(content.contains("public class DatabaseHelper extends SQLiteOpenHelper {"));
+		assertTrue(content.contains("public class DatabaseHelper extends MigrationsDatabaseHelper {"));
 	}
 
 }

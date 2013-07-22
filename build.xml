@@ -1,6 +1,6 @@
 <project name="droid-migrate" basedir="." default="jar">
 
-	<property name="version" value="0.6" />
+	<property name="version" value="0.7" />
 	<property name="lib.dir" value="lib" />
 	<property name="build.dir" value="target" />
 	<property name="build.test.dir" value="${build.dir}/test" />
@@ -60,6 +60,7 @@
 			    <include name="com/b50/migrations/AbstractMigration.class" />
 			    <include name="com/b50/migrations/MigrationException.class" />
 			    <include name="com/b50/migrations/Migrator.class" />
+			    <include name="com/b50/migrations/MigrationsDatabaseHelper.class" />
 			</fileset> 
 		</jar>
 		<copy file="${build.dir}/${ant.project.name}-${version}.jar" tofile="${build.dir}/${ant.project.name}-min.jar"/>
