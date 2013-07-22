@@ -58,6 +58,31 @@ Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is 
 
 You will need to implement your database creation via the ```DBVersion1``` class -- simply provide your SQL `String` statements to the `execSQL` method inside the `up` method (and corresponding logic in the `down` method for rollbacks). 
 
+For example, if you were creating a table dubbed `hops` and populating it with data, your initial migration's `up` and `down` methods could be implemented like so:
+
+```
+package com.b50.databaseexample;
+
+import com.b50.migrations.AbstractMigration;
+
+public class DBVersion1 extends AbstractMigration {
+
+	public void up() {
+		String create = "CREATE TABLE hops (_id integer  PRIMARY KEY AUTOINCREMENT DEFAULT NULL, name TEXT, "
+				+ "description TEXT, substitutions TEXT DEFAULT '', alpha_acid TEXT DEFAULT '', beer_styles TEXT DEFAULT '', "
+				+ "type TEXT DEFAULT '', user_notes TEXT DEFAULT '');";
+		execSQL(create);
+		String oneThing = "INSERT INTO 'hops' VALUES(1,'Amarillo','Spicy hop with mild bitterness and a noble aroma.  "
+				+ "Good all around hop.','Cascade, Centennial','7 to 10','Ale, IPA','Aroma', '');";
+		execSQL(oneThing);
+	}
+
+	public void down() {
+		execSQL("DROP TABLE hops;");
+	}
+}
+```
+
 You _do not_ need to edit any other files (i.e. don't worry about the `migrations.xml` file nor the `DatabaseHelper` class).
 
 Once your app starts up on a device, so long as you use the `DatabaseHelper` object to obtain a SQL connection for building `ListView`s or what have you, a migration will take place. 
