@@ -1,7 +1,7 @@
 #Droid Migrate
 ##Android SQLite migrations made easy!
 
-Two easy commands. One to create your first migration:
+Two easy commands. One to create your first database migration:
 
 ```
 $> droid-migrate init -d my_database
@@ -19,7 +19,7 @@ Need to rollback? No problem, run:
 $> droid-migrate generate down
 ```
 
-You can read my blog entry entitled [Introducing Android Migrations](http://thediscoblog.com/blog/2013/07/24/introducing-android-migrations/) for a detailed tutorial or you can read on. 
+You can read [Introducing Android Migrations](http://thediscoblog.com/blog/2013/07/24/introducing-android-migrations/) for a detailed tutorial or you can read on. 
 
 ## Why do I need Droid Migrate?
 
@@ -37,11 +37,11 @@ If you've ever worked with Rails migrations, then you'll be right at home. If Ra
 
 ##Step 1: Set up PATH
 
-Clone this repository (or download the zip file). Fire up a terminal and run `ant dist`. This will run some tests and ultimately build a few jar files. One jar file contains the bare minimum classes you'll need in an Android project (it's 3KB in size). The other jar file has code required for generating migrations and is not indented to be bundled with your app. 
+Clone this repository (or download the zip file). Fire up a terminal and run `ant dist`. This will run some tests and ultimately build a few jar files. One jar file contains the bare minimum classes you'll need in an Android project (it's 4KB in size and Droid Migrate will automatically place it into your project's `libs` directory). The other jar file has code required for generating migrations and is not indented to be bundled with your app. 
 
-Once you've done that, you'll need to do two things:  create new environment variable dubbed `DROID_MIGRATE_HOME` and update your `PATH`. `DROID_MIGRATE_HOME` should be set to where you cloned (or unzipped) this project. Update your `PATH` to include `DROID_MIGRATE_HOME\bin`. 
+Once you've done that, you'll need to do two things:  create a new environment variable dubbed `DROID_MIGRATE_HOME` and update your `PATH`. `DROID_MIGRATE_HOME` should be set to where you cloned (or unzipped) this project. Update your `PATH` to include `DROID_MIGRATE_HOME\bin`. 
 
-##Step 2: Create initial migration
+##Step 2: Create an initial migration
 
 Next, open a terminal in the root of a desired Android project. Droid Migrate will create a number of assets for you depending on what command you issue. 
 
