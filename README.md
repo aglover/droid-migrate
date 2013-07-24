@@ -99,7 +99,7 @@ This will result in a relevant migration.
 
 ##Step 3: Create subsequent migrations
 
-When you need to update SQLite either with database tables changes (i.e. ```ALTER``` commands) or you need to add more data (```INSERT```), you can generate a migration. This process will increment the database version found in the ```migrations.xml``` file and create a new migration class (```DBVersion<next_sequence>```. Note, you can even generate a rollback. 
+When you need to update SQLite either with database tables changes (i.e. ```ALTER``` commands) or you need to add more data (via ```INSERT```s, `UPDATE`s, etc), you can generate a migration. This process will increment the database version found in the ```migrations.xml``` file and create a new migration class (```DBVersion<next_sequence>```. Note, you can even generate a rollback. 
 
 If you want to generate an upgrade migration, you need to open a terminal in the root of a previously Droid Migrate initialized project and type:
 
