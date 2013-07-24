@@ -48,25 +48,23 @@ Next, open a terminal in the root of a desired Android project. Droid Migrate wi
 If you are creating an initial migration -- i.e. on app create, for example, then you'll need to initialize Droid Migrate like so:
 
 ```
-$> droid-migrate init -d <your database name> -p <some Java package>
+$> droid-migrate init -d <your database name> 
 ```
 
-That is, the ```init``` command creates an initial migration for the database as specified by the ```-d``` flag and the migration class (along with a few other classes) will be put into the package as specified by the ```-p``` flag.
+That is, the ```init``` command creates an initial migration for the database as specified by the ```-d``` flag. The migration class (along with a few other classes) will be put into your app's main package or a new one as specified by the ```-p``` flag.
 
 For example, if you specified the ```-p``` flag's value as ```com.acme.app``` then that package will have two classes:
 
 + ```DatabaseHelper```
 + ```DBVersion1```
 
-Where the class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML document will be generated in the ```res/values``` directory dubbed ```migrations.xml```. This document will contain values for the database sequence for migrations, the package name, and the database name. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of the ```R``` object too.
+The class ```DatabaseHelper``` manages migrations and ```DBVersion1``` is your first initial migration. What's more, a new XML document will be generated in the ```res/values``` directory dubbed ```migrations.xml```. This document will contain values for the database sequence for migrations, the package name, and the database name. That XML document will be represented in your app's ```R``` file; you'll notice that the class ```DatabaseHelper``` makes use of the ```R``` object too.
 
 You will need to implement your database creation via the ```DBVersion1``` class -- simply provide your SQL `String` statements to the `execSQL` method inside the `up` method (and corresponding logic in the `down` method for rollbacks). 
 
 For example, if you were creating a table dubbed `hops` and populating it with data, your initial migration's `up` and `down` methods could be implemented like so:
 
 ```
-package com.b50.databaseexample;
-
 import com.b50.migrations.AbstractMigration;
 
 public class DBVersion1 extends AbstractMigration {
