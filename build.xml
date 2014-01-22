@@ -20,6 +20,7 @@
 	<target name="compile.stubs">
 		<mkdir dir="${stubs.dir}" />
 		<javac includeantruntime="false" srcdir="stubs" destdir="${stubs.dir}"
+                       source="1.6" target="1.6"
 			classpathref="classpath" />
 	</target>
 
@@ -27,6 +28,7 @@
 		description="compiles source code and puts classes in target/ directory">
 		<mkdir dir="${classes.dir}" />
 		<javac includeantruntime="false" srcdir="src" destdir="${classes.dir}"
+                       source="1.6" target="1.6"
 			debug="true" classpathref="classpath">
 			<classpath>
 				<path refid="classpath" />
