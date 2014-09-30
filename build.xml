@@ -1,6 +1,6 @@
 <project name="droid-migrate" basedir="." default="jar">
 
-	<property name="version" value="0.7" />
+	<property name="version" value="0.8" />
 	<property name="lib.dir" value="lib" />
 	<property name="build.dir" value="target" />
 	<property name="build.test.dir" value="${build.dir}/test" />
