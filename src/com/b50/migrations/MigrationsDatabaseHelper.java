@@ -8,11 +8,13 @@ import android.util.Log;
 public class MigrationsDatabaseHelper extends SQLiteOpenHelper {
 
 	protected Migrator migrator;
+	protected int intendedVersion;
 
 	public MigrationsDatabaseHelper(Context context, String dbName, SQLiteDatabase.CursorFactory factory,
 			int dbVersion, String packageName) {
 		super(context, dbName, null, dbVersion);
 		this.migrator = new Migrator(packageName);
+		this.intendedVersion = dbVersion;
 	}
 
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -26,6 +28,9 @@ public class MigrationsDatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		try {
 			migrator.initialMigration(db);
+			if (intendedVersion > 1) {
+				onUpgrade(db, 1, intendedVersion);
+			}
 		} catch (MigrationException e) {
 			Log.e("MigrationsDatabaseHelper", "exception with onCreate", e);
 		}
