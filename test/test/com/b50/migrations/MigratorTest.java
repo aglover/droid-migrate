@@ -36,7 +36,25 @@ public class MigratorTest {
 		Migrator migrator = new Migrator("test.com.b50.migrations.nopackage");
 		migrator.upgrade(mockedDB, 1, 2);		
 	}
-	
+
+	@Test
+	public void testDBCanIgnoreMissingInitialMigrationClass() throws Exception {
+		SQLiteDatabase mockedDB = mock(SQLiteDatabase.class);
+		Migrator migrator = new Migrator("test.com.b50.migrations");
+		migrator.setAlertOnMissingMigrations(false);
+		migrator.initialMigration(mockedDB);
+	}
+
+	@Test
+	public void testDBCanIgnoreMissingClasses() throws Exception {
+		SQLiteDatabase mockedDB = mock(SQLiteDatabase.class);
+		Migrator migrator = new Migrator("test.com.b50.migrations");
+		migrator.setAlertOnMissingMigrations(false);
+		migrator.upgrade(mockedDB, 1, 4); // Migration version 4 does not exist
+		verify(mockedDB, times(1)).execSQL("some additional sql stmts from #2");
+		verify(mockedDB, times(1)).execSQL("some additional sql stmts from #3");
+	}
+
 	@Test
 	public void testDBUpLogic() throws Exception {
 		SQLiteDatabase mockedDB = mock(SQLiteDatabase.class);

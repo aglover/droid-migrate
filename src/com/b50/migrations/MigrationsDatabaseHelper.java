@@ -17,6 +17,10 @@ public class MigrationsDatabaseHelper extends SQLiteOpenHelper {
 		this.intendedVersion = dbVersion;
 	}
 
+	public void setAlertOnMissingMigrations(boolean alertOnMissingMigrations) {
+		this.migrator.setAlertOnMissingMigrations(alertOnMissingMigrations);
+	}
+
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		try {
 			migrator.downgrade(db, oldVersion, newVersion);
