@@ -115,6 +115,22 @@ $> droid-migrate generate down
 
 You will then need to provide the relevant SQL details in the newly generated `DBVersion<next_sequence>` class (just like you did for the initial class, dubbed `DBVersion1`).
 
+#Working with legacy apps
+
+If you are retrospectively applying migrations to a legacy application that already has a version number greater than 1, Droid Migrate can handle this.
+
+Let's say your version number is already ```5``` in your legacy application. Follow the steps above to add Droid Migrate to your project first of all. Then:
+
+1. Adjust ```database_version``` in ```res/values/migrations.xml``` and change it to ```5```
+2. Rename the ```DBVersion1.java``` class to ```DBVersion5.java```
+3. Adjust your instantiation of the `DatabaseHelper` class as follows:
+
+```
+SQLiteDatabase db = (new DatabaseHelper(this).setAlertOnMissingMigrations(false)).getWritableDatabase();
+```
+
+and your migrations will start from version 5 onwards.
+
 #How it works
 
 Droid Migrate's secret sauce can be found in three files: 
