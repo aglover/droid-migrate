@@ -4,9 +4,14 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Migrator {
 	private String packageName;
+	private boolean alertOnMissingMigrations = true;
 
 	public Migrator(String packageName) {
 		this.packageName = packageName;
+	}
+
+	public void setAlertOnMissingMigrations(boolean alertOnMissingMigrations) {
+		this.alertOnMissingMigrations = alertOnMissingMigrations;
 	}
 
 	public void initialMigration(SQLiteDatabase db) throws MigrationException {
@@ -17,7 +22,9 @@ public class Migrator {
 		} catch (IllegalAccessException e) {
 			throw new MigrationException(e);
 		} catch (ClassNotFoundException e) {
-			throw new MigrationException(e);
+			if (alertOnMissingMigrations) {
+				throw new MigrationException(e);
+			}
 		}
 	}
 
@@ -30,7 +37,9 @@ public class Migrator {
 			} catch (IllegalAccessException e) {
 				throw new MigrationException(e);
 			} catch (ClassNotFoundException e) {
-				throw new MigrationException(e);
+				if (alertOnMissingMigrations) {
+					throw new MigrationException(e);
+				}
 			}
 		}
 	}
@@ -44,7 +53,9 @@ public class Migrator {
 			} catch (IllegalAccessException e) {
 				throw new MigrationException(e);
 			} catch (ClassNotFoundException e) {
-				throw new MigrationException(e);
+				if (alertOnMissingMigrations) {
+					throw new MigrationException(e);
+				}
 			}
 		}
 	}
